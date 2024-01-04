@@ -1,0 +1,17 @@
+name: shellcheck
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable Problem Matchers
+        run: echo "::add-matcher::.github/shellcheck-matcher.json"
+      - name: Exec shellcheck
+        run: |
+          make lint
+          echo "::remove-matcher owner=shellcheck-matcher::"
